@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "amirition/reng-single-player",
+	"version": "0.1.0",
+	"title": "Reng Single Player ",
+	"category": "media",
+	"icon": "smiley",
+	"description": "Shows a player for your single audio ",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "reng-single-player",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

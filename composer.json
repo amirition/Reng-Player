@@ -1,0 +1,19 @@
+{
+    "name": "amirition/reng",
+    "description": "Your next lightweight audio player",
+    "type": "wordpress-plugin",
+    "license": "GNU General Public License",
+    "autoload": {
+        "psr-4": {
+            "Amirition\\Reng\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Amirition"
+        }
+    ],
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8"
+    }
+}
