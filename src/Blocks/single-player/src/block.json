@@ -13,5 +13,31 @@
 	"textdomain": "reng-single-player",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+  	"attributes": {
+	  "audioUrl": {
+		"type": "string",
+		"source": "attribute",
+		"attribute": "src",
+		"selector": "audio.reng-single"
+	  },
+	  "audioCover": {
+		"type": "string",
+		"source": "attribute",
+		"attribute": "src",
+		"selector": "img.audio-cover"
+	  },
+	  "audioId": {
+		"type": "number",
+		"default": 0
+	  },
+	  "audioTitle": {
+		"type": "string",
+		"default": "Your Song Title"
+	  },
+	  "audioColor": {
+		"type": "string",
+		"default": "#f1f1f1"
+	  }
+  	}
 }

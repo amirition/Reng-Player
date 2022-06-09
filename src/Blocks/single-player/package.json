@@ -1,7 +1,7 @@
 {
 	"name": "reng-player",
 	"version": "0.1.0",
-	"description": "Shows a player for your single audio ",
+	"description": "Shows a player for your single audio",
 	"author": "Amirition",
 	"license": "GNU",
 	"homepage": "https://github.com/amirition/reng-player",
@@ -16,6 +16,22 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^23.0.0"
+		"@typescript-eslint/eslint-plugin": "^5.26.0",
+		"@typescript-eslint/parser": "^5.26.0",
+		"@wordpress/scripts": "^23.0.0",
+		"eslint": "^8.16.0",
+		"eslint-config-standard": "^17.0.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-n": "^15.2.0",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-react": "^7.30.0",
+		"eslint-plugin-react-hooks": "^4.5.0"
+	},
+	"dependencies": {
+		"@wordpress/block-editor": "^9.1.0",
+		"@wordpress/components": "^19.11.0",
+		"@wordpress/i18n": "^4.9.0",
+		"color.js": "^1.2.0",
+		"node-vibrant": "^3.2.1-alpha.1"
 	}
 }

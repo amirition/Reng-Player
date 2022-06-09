@@ -1,9 +1,8 @@
 
-export default function AudioCanvas( props ) {
-
-	return (
+export default function AudioCanvas (props) {
+  return (
 		<div className="song-canvas">
-			This should be the song canvas
+			{props.audioTitle}
 		</div>
-	);
+  )
 }

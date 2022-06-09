@@ -1,17 +1,15 @@
 import {
 	ResponsiveWrapper
-} from '@wordpress/components';
+} from "@wordpress/components";
 
-import defaultThumbnail from './img/music.png';
+import defaultThumbnail from './img/music.png'
 
-export default function AudioCover( props ) {
-
-	return (
-
+export default function AudioCover (props) {
+  return (
 		<ResponsiveWrapper>
-			<img alt={props.audioTitle} src={
+			<img className="audio-cover" alt={props.audioTitle} src={
 				props.audioCover !== undefined ? props.audioCover : defaultThumbnail
 			} />
 		</ResponsiveWrapper>
-	)
+  )
 }

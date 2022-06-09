@@ -86,6 +86,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
   visualizeAudio(audioElement.getAttribute('src'));
 
+  const playTheSong = function( playButton ) {
+    audioElement.play();
+
+    playButton.dataset.playing = 'true';
+    playButton.querySelector('i').classList.remove( 'icon-play' )
+    playButton.querySelector('i').classList.add( 'icon-pause' )
+  }
+
+  const pauseTheSong = function( playButton ) {
+    audioElement.pause();
+    playButton.dataset.playing = 'false';
+    playButton.querySelector('i').classList.remove( 'icon-pause' )
+    playButton.querySelector('i').classList.add( 'icon-play' )
+  }
 
   // Create the gain node for volume
   const gainNode = audioContext.createGain();
@@ -96,7 +110,6 @@ document.addEventListener("DOMContentLoaded", function() {
   track.connect(analyzerNode).connect(gainNode).connect( audioContext.destination );
 
   const playButton = document.querySelector( '.play-button' );
-  console.log( playButton )
   playButton.addEventListener( 'click', function() {
     if( audioContext.state === 'suspended' ) {
       audioContext.resume();
@@ -104,15 +117,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if( this.dataset.playing === 'false' ) {
-      audioElement.play();
-      this.dataset.playing = 'true';
-      this.querySelector('i').classList.remove( 'icon-play' )
-      this.querySelector('i').classList.add( 'icon-pause' )
+      playTheSong( this );
     } else if ( this.dataset.playing === 'true' ) {
-      audioElement.pause();
-      this.dataset.playing = 'false';
-      this.querySelector('i').classList.remove( 'icon-pause' )
-      this.querySelector('i').classList.add( 'icon-play' )
+      pauseTheSong( this );
     }
 
   }, false )
@@ -156,6 +163,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   } );
 
-  // TODO: Change the player icon when the player is finished .
+  // Change the "play" icon when the audio is finished.
+  audioElement.addEventListener( 'ended', function() {
+    pauseTheSong( playButton )
+  } )
 
 });

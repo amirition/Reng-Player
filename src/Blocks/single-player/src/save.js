@@ -1,34 +1,32 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import {
+	useBlockProps,
+} from '@wordpress/block-editor';
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
-import { useBlockProps } from '@wordpress/block-editor';
+import ButtonsBar from "./Save/ButtonsBar";
+import AudioCanvas from "./Save/AudioCanvas";
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-export default function save() {
+const Save = ( props ) => {
+	const blockProps = useBlockProps.save();
+
 	return (
-		<p {...useBlockProps.save()}>
-			{__(
-				'Reng Single Player  – hello from the saved content!',
-				'reng-player'
-			)}
-		</p>
+		<div className="reng-player">
+			<div className="thumbnail">
+				<img src={props.attributes.audioCover} className="audio-cover" />
+			</div>
+			<div className="song flex horizontal">
+				<div className="flex vertical left">
+					<AudioCanvas audioUrl={props.attributes.audioUrl} />
+					<ButtonsBar backgroundColor={props.attributes.audioColor} />
+				</div>
+				<div className="volume-range">
+					<input type="range" id="volume" min="0" max="2" step="0.1" value="1" />
+				</div>
+			</div>
+		</div>
 	);
-}
+};
+
+export default Save;
