@@ -25,7 +25,7 @@
 		width: calc( 100% - 100px );
 		.left {
 			padding-left: 5px;
-			.buttons-bar {
+			.details-bar {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
@@ -53,7 +53,7 @@
 					}
 				}
 			}
-			width: calc( 100% - 30px );
+			width: 100%;
 		}
 	}
 	.volume-range {

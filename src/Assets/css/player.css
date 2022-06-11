@@ -62,8 +62,9 @@
 .icon-previous:before { content: '\e806'; } /* '' */
 .seek-container {
   position: relative;
+  height: 60px;
 }
-.reng-player input#time {
+.reng-player input.time {
   display: none;
 }
 .mask-container {
@@ -74,6 +75,6 @@
   overflow: hidden;
   pointer-events: none;
 }
-#songWave:hover{
+.songWave:hover{
   cursor: pointer;
 }

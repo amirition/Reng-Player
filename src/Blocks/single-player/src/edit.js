@@ -29,6 +29,7 @@ export default function Edit (props) {
   const { attributes, setAttributes } = props
 
   const setMediaAttributes = function (media) {
+		console.log(media);
 		prominent(media.image.src, {
 			amount: 1,
 			format: 'hex'
@@ -37,6 +38,7 @@ export default function Edit (props) {
 				audioColor: color,
 				audioUrl: media.url,
 				audioId: media.id,
+				audioArtist: media.meta.artist,
 				audioCover: media.image.src,
 				audioTitle: media.title
 			});
@@ -44,13 +46,13 @@ export default function Edit (props) {
   }
 
   return (
-		<div {...blockProps}>
+		<div id={"single-player-block-" + attributes.audioId} {...blockProps}>
 			<AudioCover
 				audioId={attributes.audioId}
 				audioTitle={attributes.audioTitle}
 				audioCover={attributes.audioCover}
 			/>
-			<AudioCanvas audioTitle={attributes.audioTitle} />
+			<AudioCanvas audioArtist={attributes.audioArtist} audioTitle={attributes.audioTitle} />
 			<UploadButton audioId={attributes.audioId} changeAttributes={setMediaAttributes}/>
 		</div>
   )

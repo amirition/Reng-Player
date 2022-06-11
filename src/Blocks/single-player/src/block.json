@@ -3,13 +3,11 @@
 	"apiVersion": 2,
 	"name": "amirition/reng-single-player",
 	"version": "0.1.0",
-	"title": "Reng Single Player ",
+	"title": "Reng Single Audio Player ",
 	"category": "media",
-	"icon": "smiley",
-	"description": "Shows a player for your single audio ",
-	"supports": {
-		"html": false
-	},
+	"icon": "audio",
+  	"keywords": ["audio", "player", "music", "mp3"],
+	"description": "Shows a player for your single audio.",
 	"textdomain": "reng-single-player",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
@@ -33,7 +31,11 @@
 	  },
 	  "audioTitle": {
 		"type": "string",
-		"default": "Your Song Title"
+		"default": "Cluck"
+	  },
+	  "audioArtist": {
+		"type": "string",
+		"default": "Chicken"
 	  },
 	  "audioColor": {
 		"type": "string",

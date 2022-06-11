@@ -4,15 +4,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const AudioContext = window.AudioContext || window.webkitAudioContext;
 
-  const audioContext = new AudioContext();
-  const audioElement = document.querySelector( 'audio' );
-  const track = audioContext.createMediaElementSource( audioElement );
-  let currentBuffer = null;
-  const visualizeAudio = url => {
+  const rengPlayers = document.querySelectorAll( '.reng-player' );
+
+  const visualizeAudio = (url, context, player) => {
     fetch(url)
       .then(response => response.arrayBuffer())
-      .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-      .then(audioBuffer => draw(normalizeData(filterData(audioBuffer))));
+      .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+      .then(audioBuffer => draw(normalizeData(filterData(audioBuffer)), player));
   };
 
   const filterData = audioBuffer => {
@@ -38,18 +36,18 @@ document.addEventListener("DOMContentLoaded", function() {
     return filteredData.map(n => n * multiplier);
   }
 
-  const draw = normalizedData => {
+  const draw = (normalizedData, player) => {
     // Set up the canvas
-    const canvas = document.querySelector("#songWave");
-    const canvasMask = document.querySelector("#songWaveMask");
+    const canvas = player.querySelector(".songWave");
+    const canvasMask = player.querySelector(".songWaveMask");
     const dpr = window.devicePixelRatio || 1;
-    const padding = 2;
+    const padding = -5;
     let canvasWidth = canvas.parentElement.offsetWidth;
     canvas.width = canvasWidth
     canvasMask.width = canvasWidth
     //canvas.height = (canvas.offsetHeight + padding * 2) * dpr;
-    canvas.height= 100;
-    canvasMask.height= 100;
+    canvas.height= 60;
+    canvasMask.height= 60;
 
     const ctx = canvas.getContext("2d");
     const ctxMask = canvasMask.getContext("2d");
@@ -84,88 +82,92 @@ document.addEventListener("DOMContentLoaded", function() {
     ctx.stroke();
   };
 
-  visualizeAudio(audioElement.getAttribute('src'));
-
-  const playTheSong = function( playButton ) {
+  const playTheSong = function( playButton, audioElement ) {
     audioElement.play();
 
     playButton.dataset.playing = 'true';
-    playButton.querySelector('i').classList.remove( 'icon-play' )
-    playButton.querySelector('i').classList.add( 'icon-pause' )
+    playButton.classList.remove( 'icon-play' )
+    playButton.classList.add( 'icon-pause' )
   }
 
-  const pauseTheSong = function( playButton ) {
+  const pauseTheSong = function( playButton, audioElement ) {
     audioElement.pause();
     playButton.dataset.playing = 'false';
-    playButton.querySelector('i').classList.remove( 'icon-pause' )
-    playButton.querySelector('i').classList.add( 'icon-play' )
+    playButton.classList.remove( 'icon-pause' )
+    playButton.classList.add( 'icon-play' )
   }
 
-  // Create the gain node for volume
-  const gainNode = audioContext.createGain();
-  const analyzerNode = audioContext.createAnalyser();
-  const volumeControl = document.querySelector( '#volume' );
-  const timeControl = document.querySelector( '#time' );
-  const maskContainer = document.querySelector( '.mask-container' );
-  track.connect(analyzerNode).connect(gainNode).connect( audioContext.destination );
+  const seekControl = function ( track, context) {
+    // Create the gain node for volume
+    const gainNode = context.createGain();
+    const analyzerNode = context.createAnalyser();
+    track.connect(analyzerNode).connect(gainNode).connect( context.destination );
 
-  const playButton = document.querySelector( '.play-button' );
-  playButton.addEventListener( 'click', function() {
-    if( audioContext.state === 'suspended' ) {
-      audioContext.resume();
-      //let testArray = new Float32Array( dataArray );
-    }
+  }
 
-    if( this.dataset.playing === 'false' ) {
-      playTheSong( this );
-    } else if ( this.dataset.playing === 'true' ) {
-      pauseTheSong( this );
-    }
+  rengPlayers.forEach( (player) => {
+    const audioElement = player.querySelector( 'audio' );
+    const audioContext = new AudioContext();
+    const track = audioContext.createMediaElementSource( audioElement );
+    let currentBuffer = null;
+    visualizeAudio(audioElement.getAttribute('src'), audioContext, player);
+    seekControl( track, audioContext, audioElement )
 
-  }, false )
+    const playButton = player.querySelector( '.play-button' );
+    playButton.addEventListener( 'click', function() {
+      if( audioContext.state === 'suspended' ) {
+        audioContext.resume();
+        //let testArray = new Float32Array( dataArray );
+      }
 
-  // when this track is ended
-  audioElement.addEventListener( 'ended', () => {
-    playButton.dataset.playing = 'false';
-  } )
+      if( this.dataset.playing === 'false' ) {
+        playTheSong( this, audioElement );
+      } else if ( this.dataset.playing === 'true' ) {
+        pauseTheSong( this, audioElement );
+      }
 
-  audioElement.addEventListener( 'timeupdate', () => {
-    let progressPercent = audioElement.currentTime / audioElement.duration * 100
-    timeControl.value = progressPercent
-    maskContainer.style.width = progressPercent + "%"
-  } )
+    }, false )
 
-  // When the volume is changed
-  volumeControl.addEventListener( 'input', function() {
-    gainNode.gain.value = this.value;
-  }, false );
+    // when this track is ended
+    audioElement.addEventListener( 'ended', () => {
+      playButton.dataset.playing = 'false';
+    } )
 
-  const canvas = document.querySelector("#songWave");
-  canvas.addEventListener( 'click', function(event) {
-    let progressPercent = event.offsetX / event.target.parentNode.offsetWidth
-    audioElement.currentTime = audioElement.duration * progressPercent
-  } );
+    const canvas = player.querySelector(".songWave");
+    canvas.addEventListener( 'click', function(event) {
+      let progressPercent = event.offsetX / event.target.parentNode.offsetWidth
+      audioElement.currentTime = audioElement.duration * progressPercent
+    } );
 
-  const speedBox = document.querySelector( '#reng-speed' );
-  speedBox.addEventListener( 'change', function( event ) {
-    audioElement.playbackRate = speedBox.value;
-  } );
+    const timeControl = player.querySelector( '.time' );
+    const maskContainer = player.querySelector( '.mask-container' );
+    audioElement.addEventListener( 'timeupdate', () => {
+      let progressPercent = audioElement.currentTime / audioElement.duration * 100
+      timeControl.value = progressPercent
+      maskContainer.style.width = progressPercent + "%"
+    } )
 
-  // Fast seek clicks
-  // Don't mind the green underline in PHPStorm
-  const fastSeekContainer = document.querySelector( '.reng-player .fast-seek' );
-  fastSeekContainer.addEventListener( 'click', function( event ) {
-    if( event.target.classList.contains('icon-forward') ) {
-      audioElement.currentTime += 30;
-    }
-    if( event.target.classList.contains( 'icon-backward' ) ) {
-      audioElement.currentTime -= 20;
-    }
-  } );
+    const speedBox = player.querySelector( '.reng-speed' );
+    speedBox.addEventListener( 'change', function( event ) {
+      audioElement.playbackRate = speedBox.value;
+    } );
 
-  // Change the "play" icon when the audio is finished.
-  audioElement.addEventListener( 'ended', function() {
-    pauseTheSong( playButton )
+    // Change the "play" icon when the audio is finished.
+    audioElement.addEventListener( 'ended', function() {
+      pauseTheSong( playButton )
+    } )
+
+    // Fast seek clicks
+    // Don't mind the green underline in PHPStorm
+    const fastSeekContainer = player.querySelector( '.fast-seek' );
+    fastSeekContainer.addEventListener( 'click', function( event ) {
+      if( event.target.classList.contains('icon-forward') ) {
+        audioElement.currentTime += 30;
+      }
+      if( event.target.classList.contains( 'icon-backward' ) ) {
+        audioElement.currentTime -= 20;
+      }
+    } );
   } )
 
 });
