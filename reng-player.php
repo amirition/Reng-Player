@@ -1,13 +1,13 @@
 <?php
-
 /**
  * Plugin Name: Reng Player
  * Plugin URI: https://github.com/amirition/reng-player
  * Description: Your next lightweight audio player
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: Amirition
  * Author URI: https://github.com/amirition/
- * License: GNU
+ * License: GNU General Public License
+ * Text Domain: reng-player
  */
 
 namespace Amirition\Reng;

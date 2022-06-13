@@ -13,8 +13,6 @@ export default function UploadButton (props) {
 		<MediaUploadCheck>
 			<MediaUpload
 				onSelect={(media) => {
-				  // TODO: Save the image for later use
-				  // TODO: Save the audio url for the player
 				  props.changeAttributes(media)
 				}}
 				value={props.audioId}

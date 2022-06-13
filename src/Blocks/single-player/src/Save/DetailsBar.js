@@ -69,7 +69,7 @@ export default function DetailsBar(props ) {
 
 	return(
 		<div className="details-bar" style={barStyle}>
-			<Speed color={textColor(props.backgroundColor)} />
+			<Speed color={textColor(props.backgroundColor)} backgroundColor={props.backgroundColor} />
 			<Info
 				color={textColor(props.backgroundColor)}
 				audioTitle={props.audioTitle}

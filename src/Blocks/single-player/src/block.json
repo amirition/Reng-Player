@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "Reng Single Audio Player ",
 	"category": "media",
-	"icon": "audio",
+	"icon": "format-audio",
   	"keywords": ["audio", "player", "music", "mp3"],
 	"description": "Shows a player for your single audio.",
 	"textdomain": "reng-single-player",

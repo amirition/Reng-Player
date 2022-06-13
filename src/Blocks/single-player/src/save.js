@@ -11,6 +11,8 @@ import AudioCanvas from "./Save/AudioCanvas";
 const Save = ( props ) => {
 	const blockProps = useBlockProps.save();
 
+	// TODO: try to have a nice responsive version, pixel perfect
+
 	return (
 		<div className="reng-player reng-single-player">
 			<div className="thumbnail">

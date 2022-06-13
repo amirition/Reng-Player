@@ -1,6 +1,8 @@
 export default function FastSeek( props ) {
 	const style = {
-		color: props.color
+		color: props.color,
+		display: 'flex',
+		flexWrap: 'nowrap',
 	}
 	return (
 		<div className="fast-seek" style={style}>

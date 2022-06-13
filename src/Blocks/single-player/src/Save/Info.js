@@ -2,7 +2,8 @@
 export default function Info(props) {
 	const style= {
 		color: props.color,
-		margin: 0
+		margin: 0,
+		padding: '0 10px',
 	}
 
 	return (

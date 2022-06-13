@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
       filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
     }
     return filteredData;
-
   }
 
   const normalizeData = filteredData => {
