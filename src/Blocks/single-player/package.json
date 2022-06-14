@@ -1,9 +1,9 @@
 {
 	"name": "reng-player",
-	"version": "0.1.0",
+	"version": "0.2.1",
 	"description": "Shows a player for your single audio",
 	"author": "Amirition",
-	"license": "GNU",
+	"license": "GPLv3",
 	"homepage": "https://github.com/amirition/reng-player",
 	"main": "build/index.js",
 	"scripts": {

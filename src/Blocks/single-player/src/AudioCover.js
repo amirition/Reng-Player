@@ -1,6 +1,6 @@
 import {
-	ResponsiveWrapper
-} from "@wordpress/components";
+  ResponsiveWrapper
+} from '@wordpress/components'
 
 import defaultThumbnail from './img/music.png'
 

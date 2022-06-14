@@ -3,7 +3,7 @@ Contributors: amirition
 Tags: block, music, player, audio, media
 Requires at least: 4.7
 Tested up to: 6.0
-Stable tag: 5.8
+Stable tag: 0.2.1
 Requires PHP: 7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

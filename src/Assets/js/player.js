@@ -2,10 +2,12 @@ let buffer;
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-
-  const rengPlayers = document.querySelectorAll( '.reng-player' );
-
+  /**
+   *
+   * @param url
+   * @param context
+   * @param player    DOMElement
+   */
   const visualizeAudio = (url, context, player) => {
     fetch(url)
       .then(response => response.arrayBuffer())
@@ -35,6 +37,11 @@ document.addEventListener("DOMContentLoaded", function() {
     return filteredData.map(n => n * multiplier);
   }
 
+  /**
+   *
+   * @param normalizedData
+   * @param player  DOMElement
+   */
   const draw = (normalizedData, player) => {
     // Set up the canvas
     const canvas = player.querySelector(".songWave");
@@ -76,8 +83,6 @@ document.addEventListener("DOMContentLoaded", function() {
     ctx.lineTo(x, -y);
     ctx.strokeStyle = color;
     ctx.lineTo(x, y);
-    //ctx.arc(x + width / 2, y, width / 2, Math.PI, 0, isEven);
-    //ctx.lineTo(x + width, 0);
     ctx.stroke();
   };
 
@@ -101,9 +106,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const gainNode = context.createGain();
     const analyzerNode = context.createAnalyser();
     track.connect(analyzerNode).connect(gainNode).connect( context.destination );
-
   }
 
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const rengPlayers = document.querySelectorAll( '.reng-player' );
+
+  // Play all the audios in the post
   rengPlayers.forEach( (player) => {
     const audioElement = player.querySelector( 'audio' );
     const audioContext = new AudioContext();
@@ -116,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function() {
     playButton.addEventListener( 'click', function() {
       if( audioContext.state === 'suspended' ) {
         audioContext.resume();
-        //let testArray = new Float32Array( dataArray );
       }
 
       if( this.dataset.playing === 'false' ) {
@@ -157,7 +164,6 @@ document.addEventListener("DOMContentLoaded", function() {
     } )
 
     // Fast seek clicks
-    // Don't mind the green underline in PHPStorm
     const fastSeekContainer = player.querySelector( '.fast-seek' );
     fastSeekContainer.addEventListener( 'click', function( event ) {
       if( event.target.classList.contains('icon-forward') ) {
